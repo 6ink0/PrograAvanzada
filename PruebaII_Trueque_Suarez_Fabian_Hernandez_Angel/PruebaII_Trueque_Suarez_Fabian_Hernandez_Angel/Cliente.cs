@@ -21,6 +21,12 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         #endregion
 
         #region Constructor
+        public Cliente(string nombre, string rut, int fono)
+        {
+            Nombre = nombre;
+            Rut = rut;
+            Fono = fono;
+        }
         #endregion
 
         #region Métodos
