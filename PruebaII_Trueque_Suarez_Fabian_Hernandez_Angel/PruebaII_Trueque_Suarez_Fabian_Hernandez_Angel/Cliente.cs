@@ -14,7 +14,17 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
          * ...si en algún momento hubo alguien con el producto así se puede 
          * contactar al dueño (Atributos de Clase: Cliente (nombre, rut y fono))...
          */
+        #region Propiedades
+        public string Nombre { get; set; }
+        public string Rut { get; set; }
+        public int Fono { get; set; }
+        #endregion
 
+        #region Constructor
+        #endregion
+
+        #region Métodos
+        #endregion
 
 
 
