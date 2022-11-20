@@ -30,6 +30,15 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         #endregion
 
         #region Métodos
+        public void MostrarCliente()
+        {
+            Console.Write("Cliente: ");
+            Console.Write(Nombre);
+            Console.Write("| Rut: ");
+            Console.Write(Rut);
+            Console.Write("| Fono: ");
+            Console.Write(Fono);
+        }
         #endregion
 
 
