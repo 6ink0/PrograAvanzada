@@ -32,11 +32,17 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         #region Métodos
         public void MostrarCliente()
         {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("Cliente: ");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write(Nombre);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write(" | Rut: ");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write(Rut);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write(" | Fono: ");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write(Fono);
         }
         #endregion
