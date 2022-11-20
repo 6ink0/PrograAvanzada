@@ -21,7 +21,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         #region Propiedades
         public int CodigoProducto { get; set; }
         public DateTime FechaIngreso { get; set; }
-        public string Descripción { get; set; }
+        public string Descripcion { get; set; }
         public int ValorAprox { get; set; }
         public string[] Preferencias { get; set; }
         public bool Disponible { get; set; }
@@ -30,6 +30,16 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         #endregion
 
         #region Constructor
+        public Producto(int codigoProducto, string clienteId, DateTime fechaIngreso, string descripcion, int valorAprox, string[] preferencias, bool disponible)
+        {
+            CodigoProducto = codigoProducto;
+            FechaIngreso = fechaIngreso;
+            Descripcion = descripcion;
+            ValorAprox = valorAprox;
+            Preferencias = preferencias;
+            Disponible = disponible;
+            ClienteId = clienteId;
+        }
         #endregion
 
         #region Métodos
