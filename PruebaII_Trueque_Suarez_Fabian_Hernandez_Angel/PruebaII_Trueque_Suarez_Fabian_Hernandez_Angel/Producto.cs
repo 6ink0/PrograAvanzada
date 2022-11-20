@@ -19,6 +19,14 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
          */
 
         #region Propiedades
+        public int CodigoProducto { get; set; }
+        public DateTime FechaIngreso { get; set; }
+        public string Descripción { get; set; }
+        public int ValorAprox { get; set; }
+        public string[] Preferencias { get; set; }
+        public bool Disponible { get; set; }
+        //Se Debe considerar al menos una asociación de clases 1 -> n.
+        public string ClienteId { get; set; }
         #endregion
 
         #region Constructor
