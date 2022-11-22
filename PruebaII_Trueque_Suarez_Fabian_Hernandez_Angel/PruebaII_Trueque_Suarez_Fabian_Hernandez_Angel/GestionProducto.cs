@@ -81,13 +81,14 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
             if(listaCliente.Count != 0)
             {
                 Console.Clear();
-                foreach(Cliente cliente in listaCliente)
+                Console.WriteLine("-- LISTADO DE CLIENTES --" + "\n");
+                foreach (Cliente cliente in listaCliente)
                 {
                     int posicion = listaCliente.IndexOf(cliente) + 1;
-                    Console.Write("(" + posicion + ")");
+                    Console.Write("(" + posicion + ") ");
                     cliente.MostrarCliente();
                 }
-                Console.Write("Listado Exitoso!");
+                Console.Write("\n" + "Listado Exitoso!");
                 Console.ReadLine();
             }
             else { Console.WriteLine("Listado sin clientes.");  }
