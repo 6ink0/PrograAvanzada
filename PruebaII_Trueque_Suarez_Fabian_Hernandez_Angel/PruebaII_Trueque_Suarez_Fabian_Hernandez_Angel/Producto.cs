@@ -43,6 +43,62 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         #endregion
 
         #region Métodos
+        public void MostrarProducto()
+        {
+            string srtDisponible;
+            if (Disponible)
+            {
+                srtDisponible = "Sí";
+            }
+            else
+                srtDisponible = "No";
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write("Código: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(CodigoProducto);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write(" | Cliente: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(ClienteId);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write(" | Fecha de ingreso: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(FechaIngreso);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write(" | Descripción: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(Descripcion);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write(" | Valor aproximado: ");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(ValorAprox);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write(" | Preferencias: ");
+            int contador = 0;
+            foreach(string preferencias in Preferencias)
+            {
+                contador++;
+                Console.ForegroundColor = ConsoleColor.White;
+                if (Preferencias.Length != contador)
+                {
+                    Console.Write(preferencias + "-");
+                }
+                else
+                {
+                    Console.Write(preferencias);
+                }
+            }
+
+            if (Disponible)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+            }
+            else
+                Console.ForegroundColor = ConsoleColor.Red;
+
+            Console.Write("Disponible:{0}", srtDisponible);
+        }
         #endregion
     }
 }
