@@ -51,11 +51,18 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         #region RellenarListaProductos
         public static void RellenarListaProducto()
         {
+            string[] linea;
             listaProducto = new List<Producto>(); //nueva lista
             using (StreamReader sr = new StreamReader(rutaProducto))
             {
                 try
                 {
+                    while (!sr.EndOfStream)
+                    {
+                        linea = sr.ReadLine().Split('|');
+                        string[] prefe = linea[5].Split('|');
+                        listaProducto.Add(new Producto(int.Parse(linea[0]), linea[1], DateTime.Parse(linea[2]), linea[3], int.Parse(linea[4]), prefe, Convert.ToBoolean(linea[6])));
+                    }
                 }
                 catch (Exception ex)
                 {
