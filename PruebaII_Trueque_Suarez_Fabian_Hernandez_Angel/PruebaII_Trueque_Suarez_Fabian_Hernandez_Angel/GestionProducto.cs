@@ -21,11 +21,21 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         #region RellenarListaClientes
         public static void RellenarListaCliente()
         {
-            listaCliente = new List<Cliente>(); //nueva lista
+            string[] linea;
+            listaCliente = new List<Cliente>(); //Nueva lista
             using (StreamReader sr = new StreamReader(rutaCliente))
             {
                 try 
-                { 
+                {
+                    while (!sr.EndOfStream) //Si no es el final del Stream, loop. 
+                    {
+                        linea = sr.ReadLine().Split('|'); //Divide la linea leída por "|" ingresado al momento de guardar.
+                        string nombre = linea[1];
+                        string rut = linea[2];
+                        int fono = int.Parse(linea[3]);
+                        //Se ingresan valores leídos del string a cada parámetro del nuevo cliente, en la lista.
+                        listaCliente.Add(new Cliente(nombre, rut, fono));
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -39,7 +49,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         #endregion
 
         #region RellenarListaProductos
-        public static void RellenarListaProductos()
+        public static void RellenarListaProducto()
         {
             listaProducto = new List<Producto>(); //nueva lista
             using (StreamReader sr = new StreamReader(rutaProducto))
