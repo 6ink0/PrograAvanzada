@@ -43,7 +43,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write(" | Fono: ");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write(Fono);
+            Console.Write(Fono+"\n");
         }
         #endregion
 
