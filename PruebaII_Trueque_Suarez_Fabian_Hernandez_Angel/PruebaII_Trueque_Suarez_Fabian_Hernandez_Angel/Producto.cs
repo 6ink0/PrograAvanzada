@@ -30,7 +30,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         #endregion
 
         #region Constructor
-        public Producto(int codigoProducto, string clienteId, DateTime fechaIngreso, string descripcion, int valorAprox, string[] preferencias, bool disponible)
+        public Producto(int codigoProducto, string clienteId, DateTime fechaIngreso, string descripcion, int valorAprox,string[] preferencias, bool disponible)
         {
             CodigoProducto = codigoProducto;
             FechaIngreso = fechaIngreso;
@@ -40,6 +40,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
             Disponible = disponible;
             ClienteId = clienteId;
         }
+        public Producto() { }
         #endregion
 
         #region Métodos
