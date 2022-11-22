@@ -75,6 +75,26 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         }
         #endregion
 
+        #region ListarClientes
+        public static void ListarClientes()
+        {
+            if(listaCliente.Count != 0)
+            {
+                Console.Clear();
+                foreach(Cliente cliente in listaCliente)
+                {
+                    int posicion = listaCliente.IndexOf(cliente) + 1;
+                    Console.Write("(" + posicion + ")");
+                    cliente.MostrarCliente();
+                }
+                Console.Write("Listado Exitoso!");
+                Console.ReadLine();
+            }
+            else { Console.WriteLine("Listado sin clientes.");  }
+        }
+        #endregion
+
+
         #endregion
     }
 }
