@@ -99,7 +99,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         public static void ProductosDisponibles()
         {
             Console.Clear();
-            Console.WriteLine("---- PRODUCTOS DISPONIBLES ----");
+            Console.WriteLine("---- PRODUCTOS DISPONIBLES ----\n");
             //Cada producto con estado "true" se agrega a estadoDisponible.
             IEnumerable<Producto> estadoDisponible = from Producto in listaProducto where Producto.Disponible.Equals(true) select Producto;
             foreach(Producto disponibles in estadoDisponible)
@@ -109,7 +109,21 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         }
         #endregion
 
+        #region ProductosEstadoNoDisponible
+        public static void ProductosNoDisponibles()
+        {
+            Console.Clear();
+            Console.WriteLine("---- PRODUCTOS NO DISPONIBLES ---- \n");
+            //Cada producto con estado "false" se agrega a estadoNoDisponible.
+            IEnumerable<Producto> estadoNoDisponible = from Producto in listaProducto where Producto.Disponible == false select Producto;
+            foreach (Producto noDisponibles in estadoNoDisponible)
+            {
+                noDisponibles.MostrarProducto();
+            }
+            Console.ReadLine();
+        }
+        #endregion
 
-#endregion
+        #endregion
     }
 }

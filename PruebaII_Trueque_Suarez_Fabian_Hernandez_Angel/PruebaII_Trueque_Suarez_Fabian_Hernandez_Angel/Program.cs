@@ -17,7 +17,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
             //GestionProducto.ListarClientes();
             
             GestionProducto.RellenarListaProducto();
-            GestionProducto.ProductosDisponibles();
+            GestionProducto.ProductosNoDisponibles();
 
             Console.ReadKey();
         }
