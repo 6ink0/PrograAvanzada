@@ -81,7 +81,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
             if(listaCliente.Count != 0)
             {
                 Console.Clear();
-                Console.WriteLine("-- LISTADO DE CLIENTES --" + "\n");
+                Console.WriteLine("---- LISTADO DE CLIENTES ----" + "\n");
                 foreach (Cliente cliente in listaCliente)
                 {
                     int posicion = listaCliente.IndexOf(cliente) + 1;
@@ -95,7 +95,21 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         }
         #endregion
 
-
+        #region ProductosEstadoDisponible
+        public static void ProductosDisponibles()
+        {
+            Console.Clear();
+            Console.WriteLine("---- PRODUCTOS DISPONIBLES ----");
+            //Cada producto con estado "true" se agrega a estadoDisponible.
+            IEnumerable<Producto> estadoDisponible = from Producto in listaProducto where Producto.Disponible.Equals(true) select Producto;
+            foreach(Producto disponibles in estadoDisponible)
+            {
+                disponibles.MostrarProducto();
+            }
+        }
         #endregion
+
+
+#endregion
     }
 }

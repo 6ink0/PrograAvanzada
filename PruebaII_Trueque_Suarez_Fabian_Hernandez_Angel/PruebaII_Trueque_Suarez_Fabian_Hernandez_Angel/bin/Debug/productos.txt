@@ -1,0 +1,4 @@
+001|1836465-5|01/01/2022 01:00:00|Objeto 1|50000|Queque-Completo-Fajita|true|
+003|11111111-1|03/03/2022 01:00:00|Objeto 2|50000|Queque-Completo-Fajita|true|
+002|11111111-1|02/02/2022 01:00:00|Objeto 3|50000|Queque-Completo-Fajita|false|
+004|22222222-2|04/04/2022 01:00:00|Objeto 4|50000|Queque-Completo-Fajita|false|
