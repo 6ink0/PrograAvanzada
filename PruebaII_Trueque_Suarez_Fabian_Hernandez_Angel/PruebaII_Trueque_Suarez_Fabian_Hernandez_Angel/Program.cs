@@ -46,7 +46,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
                 switch (resp)
                 {
                     case "1":
-                        //GestionProducto.AgregarCliente();
+                        GestionProducto.AgregarCliente();
                         break;
 
                     case "2":

@@ -1,0 +1,4 @@
+1|18364965-5|01-01-2022 0:00:00|Desc 1|2000|fajita-copleto-queque|True|
+2|18364965-5|01-01-2022 0:00:00|Desc 2|1500|fajita-copleto-queque|True|
+3|11111111-1|01-01-2022 0:00:00|Desc 3|1000|fajita-copleto-queque|False|
+4|22222222-2|01-01-2022 0:00:00|Desc 4|500|fajita-copleto-queque|False|
