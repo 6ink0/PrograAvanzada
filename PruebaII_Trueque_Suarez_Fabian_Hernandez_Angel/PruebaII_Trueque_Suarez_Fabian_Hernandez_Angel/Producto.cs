@@ -91,12 +91,12 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
                 }
             }
 
-            if (Disponible)
+            /*if (Disponible)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
             }
             else
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Red;*/
 
             Console.Write(" Disponible:{0}", srtDisponible);
             Console.WriteLine("\n");

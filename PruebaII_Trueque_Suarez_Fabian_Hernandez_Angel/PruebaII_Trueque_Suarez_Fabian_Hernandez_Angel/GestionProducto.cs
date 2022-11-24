@@ -18,6 +18,17 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
 
         #region Métodos
 
+        #region ConteoGeneral
+        //-------------METODO PARA CONTEO DE CLIENTES Y PRODUCTOS----------------------
+        public static void ConteoGeneral()
+        {
+            int i = listaCliente.Count;
+            int j = listaProducto.Count;
+            Console.WriteLine("Cantidad de Clientes: " + i + "\n" +
+                "Cantidad de Productos: " + j + "\n");
+        }
+        #endregion
+
         #region RellenarListaClientes
         public static void RellenarListaCliente()
         {
@@ -106,6 +117,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
             {
                 disponibles.MostrarProducto();
             }
+            Console.ReadKey();
         }
         #endregion
 
@@ -123,6 +135,87 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
             Console.ReadLine();
         }
         #endregion
+
+        #region NuevoCliente
+        public static void main()
+        {
+            Console.Clear();
+            //Válida datos ingresados.
+            string strRut, cliente, nombre, srtFono, fecha = "";
+            bool valido = false;
+
+            Console.WriteLine("Nuevo Usuario\n");
+
+        }
+        #endregion
+
+        #region NuevoProducto
+        #endregion
+
+        #region ModificarDisponible
+        internal static void ModificarDisponible()
+        {
+            Console.Clear();
+            int contador = 0;
+            //Mostrar Productos
+            IEnumerable<Producto> listadoProductos = from Producto in listaProducto select Producto;
+            foreach(Producto seleccion in listaProducto)
+            {
+                contador++;
+                Console.WriteLine("(" + contador + ")");
+                seleccion.MostrarProducto();
+            }
+            //Seleccionar Producto
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("Indique el código del producto a modificar: ");
+            string cod = Console.ReadLine();
+            Console.Clear();
+
+            if(int.TryParse(cod, out int opc) || opc < listadoProductos.Count() && opc != 0)
+            {
+                int i = opc - 1;
+                if (listaProducto[i].Disponible)
+                {
+                    listaProducto[i].Disponible = false;
+                }
+                else
+                {
+                    listaProducto[i].Disponible = true;
+                }
+                insertarTxt();
+            }
+
+        }
+        #endregion
+
+        #region InsertarTxt
+        public static void insertarTxt()
+        {
+            try
+            {
+                string texto = "";
+                using (StreamWriter sw = new StreamWriter(rutaProducto))
+                {
+                    foreach(Producto producto in listaProducto)
+                    {
+                        string p = +producto.CodigoProducto + "|" + producto.ClienteId + "|" + producto.FechaIngreso + "|" +
+                            producto.Descripcion + "|" + producto.Preferencias + "|" + producto.Disponible + "|";
+                        texto = texto + p;
+                    }
+                    sw.WriteLine(texto);
+                    sw.Dispose();
+                    sw.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine (ex.Message);
+            }
+        }
+        #endregion
+
+
+
 
         #endregion
     }
