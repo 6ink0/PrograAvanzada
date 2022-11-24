@@ -240,13 +240,150 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
             }
             Console.Read();
         }
-            #endregion
+        #endregion
 
         #region NuevoProducto
-            #endregion
+        //-------------METODO PARA INGRESAR NUEVO PRODUCTO.----------------------
+        public static void AgregarProducto()
+        {
+            Console.Clear();
+            string descripcion, strFecha, strValor, strEleccion1, strEleccion2, idCliente = "";
+            int valor, eleccion2;
+            //USUARIO NUEVO O USUARIO ANTIGUO
+            do
+            {
+                //Se consulta si el usuario ya está ingresado a Sistema,
+                //para obtener el rut, que es utilizado como codigoCliente (Clave foranea) en el producto.
+                Console.WriteLine("TIPO DE CLIENTE:\n " +
+                    "(1) Nuevo." +
+                    "(2) Antiguo.\n");
+                strEleccion1 = Console.ReadLine();
+
+                if (strEleccion1 == "1")//en caso de que sea nuevo, se gestionará el metodo AgregarUsuario
+                {
+                    AgregarCliente();
+                    idCliente = listaCliente.LastOrDefault().Rut;//Por medio de LastOrDefault()
+                                                                  //en el listado general de clientes,se obtendrá el rut.
+                }
+                else if (strEleccion1 == "2")
+                {
+                    if (listaCliente.Count() != 0)
+                    {
+                        do
+                        {
+                            Console.Clear();
+                            ListarClientes();
+
+                            Console.WriteLine("Indique un número de cliente: ");
+                            strEleccion2 = Console.ReadLine();
+
+                        } while (!int.TryParse(strEleccion2, out eleccion2) || eleccion2 < 0 || eleccion2 > listaCliente.Count());
+                        idCliente = listaCliente[eleccion2 - 1].Rut;
+                    }
+                }
+            } while (!int.TryParse(strEleccion1, out int eleccion1) || eleccion1 < 1 || eleccion1 > 2);
+
+            Console.Clear();
+
+            //Se valida el resto de la información del producto
+            DateTime fecha = DateTime.Now;
+            strFecha = fecha.ToString();
+            Console.WriteLine("Producto Nuevo: ");
+            Console.WriteLine("\nFecha Ingreso Producto: " + fecha + "\n");
+            do
+            {
+                Console.WriteLine("Ingrese Descripcion: ");
+                descripcion = Console.ReadLine();
+            } while (descripcion == string.Empty);
+
+            do
+            {
+                Console.WriteLine("\nValor Aproximado: ");
+                strValor = Console.ReadLine().Trim();
+            } while (!int.TryParse(strValor, out valor));
+            string[] preferencias;
+            string strPref;
+            do
+            {
+                Console.WriteLine("\nIngrese sus preferencias separadas por un guión, Ej: (opc1-opc2-opc3): ");
+                strPref = Console.ReadLine();
+                preferencias = strPref.Split('-');
+            } while (preferencias.Length < 3);
+
+            //Para no repetir codigos, se sumará 1 al producto anterior
+            //dando así un codigo diferente para cada producto con ta lde no hacerlo manual.
+            listaProducto = new List<Producto>();
+            IEnumerable<Producto> busquedaDisponible = from Producto in listaProducto select Producto;
+
+            int codigo;
+            try
+            {
+                if (listaProducto.Count() != 0)
+                {
+                    codigo = listaProducto.LastOrDefault().CodigoProducto;
+                    codigo = codigo + 1;
+                }
+                else
+                {
+                    codigo = 1;
+                }
+            }
+            catch
+            {
+                codigo = 1;
+            }
+
+            listaProducto.Add(new Producto(codigo, idCliente, fecha, descripcion, valor, preferencias, true));
+            string linea = "";
+            using (StreamReader sr = new StreamReader(rutaProducto))
+            {
+                try
+                {
+                    while (!sr.EndOfStream)//se busca el texto y se agrega a linea, luego salto de linea,
+                                           //y se agrega la siguiente linea hasta que se hayan LEIDO todas las lineas del txt.
+                    {
+                        linea = linea + sr.ReadLine() + Environment.NewLine;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error ->" + ex.ToString());
+                }
+                sr.Dispose();
+                sr.Close();
+            }
+
+            string producto = codigo + "|" + idCliente + "|" + strFecha + "|" + descripcion + "|" + valor + "|" + strPref + "|true";
+
+            using (StreamWriter sw = new StreamWriter(rutaProducto))
+            {
+                try
+                {
+                    if (linea == string.Empty)
+                    {
+                    }
+                    else
+                    {
+                        producto = linea + producto;// Con el texto anterior guardado( en linea), 
+                                                    // y se concatena el producto para ser agregado al txt.
+                    }
+                    sw.WriteLine(producto);
+                    Console.Clear();
+                    Console.WriteLine(producto + "\n" + "Producto Agregado Exitosamente!");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error ->" + ex.ToString());
+                }
+                sw.Dispose();
+                sw.Close();
+            }
+
+        }
+        #endregion
 
         #region ModificarDisponible
-            internal static void ModificarDisponible()
+        internal static void ModificarDisponible()
             {
                 Console.Clear();
                 int contador = 0;
@@ -305,13 +442,102 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
                     Console.WriteLine(ex.Message);
                 }
             }
-            #endregion
+        #endregion
+
+        #region BuscarPorFecha
+        public static void BuscarProductoPorFecha()
+        {
+            IEnumerable<Producto> busquedaFecha = from Producto in listaProducto orderby Producto.FechaIngreso descending select Producto;
+
+            //VALIDAMOS DÍA, MES Y AÑO NO SUPERIOR A LA FECHA ACTUAL
+            string d, m, a;
+            string fecha;
+            int r = 0;
+            Console.Clear();
+            Console.WriteLine("--- Búsqueda por fecha ---\n" +
+                "Ingrese el limite de la búsqueda por fecha de los productos: \n");
+            do
+            {
+                Console.WriteLine("Dia: 00");
+                d = Console.ReadLine();
+            } while (!(int.TryParse(d, out r)) || r > 31);
+
+            do
+            {
+                Console.WriteLine("Mes: 00");
+                m = Console.ReadLine();
+            } while (!(int.TryParse(m, out r) || r > 12));
+
+            do
+            {
+                Console.WriteLine("Año: 0000");
+                a = Console.ReadLine();
+            } while (a.Length != 4 || !(int.TryParse(a, out r)) || r < 1990 & r < int.Parse(DateTime.Today.Year.ToString()));
 
 
+            //Asignamos la fecha de hoy a Fecha Final
+            DateTime fechaFinal = DateTime.Today;
+
+            try
+            {
+                fecha = d + "/" + m + "/" + a;
 
 
-            #endregion
+                fechaFinal = DateTime.Parse(fecha);
+                int resultado = DateTime.Compare(fechaFinal, DateTime.Today.AddDays(1));
+                //Compara dos fechas, si la ingresada es mayor que la actual, se debe volver a ingresar una fecha.
+                if (resultado <= 0)
+                {
+                    Console.Clear();
+                    //Indica las dos fechas al usuario que se están verificando.
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.WriteLine("Fecha Hoy: {0}\n" +
+                        "Fecha Límite: {1}\n", DateTime.Now, fechaFinal);
+
+
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine("-----PRODUCTOS EN FECHA-----");
+
+                    foreach (Producto busquedaProducto in busquedaFecha)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        resultado = DateTime.Compare(fechaFinal, busquedaProducto.FechaIngreso);
+                        if (resultado <= 0)
+                        {
+                            busquedaProducto.MostrarProducto();
+                        }
+                    }
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine("-----PRODUCTOS FUERA DE FECHA  (ANTIGUOS)-----");
+                    foreach (Producto busquedaProducto in busquedaFecha)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        resultado = DateTime.Compare(fechaFinal, busquedaProducto.FechaIngreso);
+                        if (resultado > 0)
+                        {
+                            busquedaProducto.MostrarProducto();
+                        }
+                    }
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("\nDebe ingresar una fecha anterior al día de hoy!");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error ->" + ex.ToString());
+            }
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ReadLine();
         }
+        #endregion
+
+
+        #endregion
     }
+}
 
 

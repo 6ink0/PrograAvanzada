@@ -8,6 +8,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
 {
     class Program
     {
+        #region MAIN-MENÚ
         static void Main(string[] args)
         {
             //Prueba de ejecución método 'MostrarCliente'.
@@ -20,6 +21,8 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
             //GestionProducto.ModificarDisponible();
 
             //Console.ReadKey();
+
+
             Console.ForegroundColor = ConsoleColor.White;
             string resp = "0";
             do
@@ -51,7 +54,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
 
                     case "2":
 
-                        //GestionProducto.AgregarProducto();
+                        GestionProducto.AgregarProducto();
                         break;
 
                     case "3":
@@ -63,7 +66,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
                         break;
 
                     case "5":
-                        //GestionProducto.BuscarProductoPorFecha();
+                        GestionProducto.BuscarProductoPorFecha();
                         break;
 
                     case "6":
@@ -78,5 +81,6 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
             Console.WriteLine("Que tenga buen día!");
             Console.ReadKey();
         }
+        #endregion
     }
 }
