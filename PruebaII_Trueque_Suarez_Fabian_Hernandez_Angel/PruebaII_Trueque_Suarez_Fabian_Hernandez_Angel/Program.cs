@@ -29,6 +29,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
             {
                 GestionProducto.RellenarListaProducto();
                 GestionProducto.RellenarListaCliente();
+
                 Console.Clear();
                 GestionProducto.ConteoGeneral();
                 Console.WriteLine(
@@ -78,7 +79,9 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
 
                 }
             } while (resp != "8");
-            Console.WriteLine("Que tenga buen día!");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("\n¡Que tengas buen día!");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.ReadKey();
         }
         #endregion

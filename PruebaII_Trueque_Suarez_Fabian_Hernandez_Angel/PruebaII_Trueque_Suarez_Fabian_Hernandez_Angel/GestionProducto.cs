@@ -12,8 +12,11 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
         #region Propiedades
         static List<Cliente> listaCliente;
         static List<Producto> listaProducto;
+        private static List<string> historialTrueques = new List<string>();
         static string rutaCliente = @"C:\Users\ginko\Documents\GitHub\PruebaII_Trueque\PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel\PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel\bin\Debug\clientes.txt";
         static string rutaProducto = @"C:\Users\ginko\Documents\GitHub\PruebaII_Trueque\PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel\PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel\bin\Debug\productos.txt";
+        static string rutaHistorial = @"C:\Users\ginko\Documents\GitHub\PruebaII_Trueque\PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel\PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel\bin\Debug\historial.txt";
+
         #endregion
 
         #region Métodos
@@ -82,6 +85,52 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
                 //Al estar usando 'using', se debe cerrar el stream (Close) y eliminar la info (Dispose).
                 sr.Dispose();
                 sr.Close();
+            }
+        }
+        #endregion
+
+        #region Historial
+        public static void RellenarListaHistorica()
+        {
+            using (StreamReader sr = new StreamReader(rutaHistorial))
+            {
+                try
+                {
+                    string linea;
+                    linea = sr.ReadLine();
+                    do
+                    {
+                        string campos = linea;
+                        historialTrueques.Add(campos);
+                        linea = sr.ReadLine();
+                    } while (linea != null);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error--> " + e.ToString());
+                }
+            }
+
+        }
+
+        private static void GuardarHistorico()
+        {
+            StreamWriter sw = new StreamWriter(rutaHistorial, false);
+            try
+            {
+                foreach (string objs in historialTrueques)
+                {
+                    sw.WriteLine(objs);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error ->" + e.ToString());
+            }
+            finally
+            {
+                sw.Dispose();
+                sw.Close();
             }
         }
         #endregion
@@ -388,60 +437,181 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
                 Console.Clear();
                 int contador = 0;
                 //Mostrar Productos
-                IEnumerable<Producto> listadoProductos = from Producto in listaProducto select Producto;
-                foreach (Producto seleccion in listaProducto)
+                IEnumerable<Producto> estadoDisponible = from Producto in listaProducto where Producto.Disponible.Equals(true) select Producto;
+                foreach (Producto disponibles in estadoDisponible)
                 {
                     contador++;
                     Console.WriteLine("(" + contador + ")");
-                    seleccion.MostrarProducto();
+                    disponibles.MostrarProducto();
                 }
-                //Seleccionar Producto
+                //Seleccionar Producto 1 y 2
+                bool b1, b2;
+                int id1, id2;
+                string opcTrueque;
+                Producto pro2 = new Producto();
+                Producto pro1 = new Producto();
+
+            Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("Indique el código del '1er' producto a modificar: ");
+                string cod1 = Console.ReadLine();
+                b1 = int.TryParse(cod1, out int opc1);
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write("Indique el código del producto a modificar: ");
-                string cod = Console.ReadLine();
-                Console.Clear();
+                Console.Write("Indique el código del '2do' producto a modificar: ");
+                string cod2 = Console.ReadLine();
+                b2 = int.TryParse(cod2, out int opc2);
 
-                if (int.TryParse(cod, out int opc) || opc < listadoProductos.Count() && opc != 0)
-                {
-                    int i = opc - 1;
-                    if (listaProducto[i].Disponible)
+                if (b1) {
+                    id1 = Int32.Parse(cod1);
+                    List<Producto> idPro = (from id in listaProducto
+                                            where id.CodigoProducto == id1
+                                            select id).ToList();
+                    foreach (Producto pro in idPro)
                     {
-                        listaProducto[i].Disponible = false;
+                        pro1 = pro;
                     }
-                    else
+
+                    if (pro1.CodigoProducto == id1)
                     {
-                        listaProducto[i].Disponible = true;
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine("\nProducto ID: "+ id1 +", encontrado y disponible de cambio.");
+                        Console.ForegroundColor = ConsoleColor.White;
                     }
-                    insertarTxt();
                 }
 
+                if (b2)
+                {
+                    id2 = Int32.Parse(cod2);
+                    List<Producto> idPro = (from id in listaProducto
+                                            where id.CodigoProducto == id2
+                                            select id).ToList();
+                    foreach (Producto pro in idPro)
+                    {
+                        pro2 = pro;
+                    }
+
+                    if (pro2.CodigoProducto == id2)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine("Producto ID: " + id2 + ", encontrado y disponible de cambio.\n");
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                }
+
+                if (pro1 != null && pro2 != null)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("¿Quiere intercambiar los siguientes productos?: \n");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("|" + pro1.CodigoProducto.ToString() + " | " + pro1.ClienteId.ToString() + " | " + pro1.FechaIngreso.ToString() + " | " + pro1.Descripcion.ToString() + " | " +
+                        pro1.ValorAprox.ToString() + " | " + pro1.CodigoProducto.ToString() + " | " + pro1.Preferencias.ToString() + " | " + pro1.Disponible.ToString() +"\n");
+                    Console.WriteLine("|" + pro2.CodigoProducto.ToString() +" | "+ pro2.ClienteId.ToString()+ " | " +pro2.FechaIngreso.ToString() + " | " + pro2.Descripcion.ToString() + " | " + 
+                        pro2.ValorAprox.ToString()+ " | " +pro2.CodigoProducto.ToString() + " | " + pro2.Preferencias.ToString() + " | " + pro2.Disponible.ToString() +
+                                            "Confirmas:" + "\n\n1- Si \n" +
+                                            "2- No\n");
+                    opcTrueque = Console.ReadLine();
+                    Console.Clear();
+
+                    if(opcTrueque == "1" | opcTrueque == "2")
+                    {
+                        switch (opcTrueque)
+                        {
+                            case "1":
+                            historialTrueques.Add("Producto 1:\n" + 
+                                "------------------------------------------------------------------------------------\n" +
+                                "| " + pro1.CodigoProducto.ToString() + " | " + pro1.ClienteId.ToString() + " | " + pro1.FechaIngreso.ToString() + " | " + pro1.Descripcion.ToString() + " | " +
+                                pro1.ValorAprox.ToString() + " | " + pro1.CodigoProducto.ToString() + " | " + pro1.Preferencias.ToString() + " | " + pro1.Disponible.ToString() + " |\n" +
+                                "------------------------------------------------------------------------------------\n" +
+                                "Producto 2:\n"+
+                                "| " + pro2.CodigoProducto.ToString() + " | " + pro2.ClienteId.ToString() + " | " + pro2.FechaIngreso.ToString() + " | " + pro2.Descripcion.ToString() + " | " +
+                                pro2.ValorAprox.ToString() + " | " + pro2.CodigoProducto.ToString() + " | " + pro2.Preferencias.ToString() + " | " + pro2.Disponible.ToString() + " |\n" +
+                                "------------------------------------------------------------------------------------");
+                            GuardarHistorico();
+                            listaProducto.RemoveAll(x => historialTrueques.Contains(x);
+                            listaProducto.Remove(pro2);
+
+                            break;
+
+                            case "2":
+                                Console.Clear();
+                            break;
+                    }
+                    }
+
+                }
+
+
+
+
+
+
+                Console.ReadKey();
+
+
+
+
+            /*
+                     public static Objeto BuscarObj(int ids) {
+            Objeto obj = new Objeto();
+            List<Objeto> idObjs = (from id in losObjetos
+                                   where id.Id == ids
+                                   select id).ToList();
+            foreach (Objeto id in idObjs) {
+                obj = id;
             }
-            #endregion
+            return obj;
+        }
+             */
+
+
+
+
+            //Console.Clear();
+
+
+
+
+
+            /*if (int.TryParse(cod, out int opc) || opc < estadoDisponible.Count() && opc != 0)
+            {
+                int i = opc;
+                if (listaProducto[i].Disponible)
+                {
+                    listaProducto[i].Disponible = false;
+                }
+                else
+                {
+                    listaProducto[i].Disponible = true;
+                }
+                insertarTxt();
+            }*/
+
+        }
+        #endregion
 
         #region InsertarTxt
-            public static void insertarTxt()
+        /*public static void insertarTxt()
+        {
+            try
             {
-                try
+                string texto = "";
+                using (StreamWriter sw = new StreamWriter(rutaProducto))
                 {
-                    string texto = "";
-                    using (StreamWriter sw = new StreamWriter(rutaProducto))
+                    foreach (Producto producto in listaProducto)
                     {
-                        foreach (Producto producto in listaProducto)
-                        {
-                            string p = +producto.CodigoProducto + "|" + producto.ClienteId + "|" + producto.FechaIngreso + "|" +
-                                producto.Descripcion + "|" + producto.Preferencias + "|" + producto.Disponible + "|";
-                            texto = texto + p;
-                        }
-                        sw.WriteLine(texto);
-                        sw.Dispose();
-                        sw.Close();
+                        string p = +producto.CodigoProducto + "|" + producto.ClienteId + "|" + producto.FechaIngreso + "|" +
+                            producto.Descripcion + "|" + producto.Preferencias + "|" + producto.Disponible + "|";
+                        texto = texto + p;
                     }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
+                    sw.WriteLine(texto);
+                    sw.Dispose();
+                    sw.Close();
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }*/
         #endregion
 
         #region BuscarPorFecha
@@ -523,6 +693,7 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine("\nDebe ingresar una fecha anterior al día de hoy!");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
 
             }
