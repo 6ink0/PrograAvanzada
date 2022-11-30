@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
@@ -506,8 +507,8 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
                         pro1.ValorAprox.ToString() + " | " + pro1.CodigoProducto.ToString() + " | " + pro1.Preferencias.ToString() + " | " + pro1.Disponible.ToString() +"\n");
                     Console.WriteLine("|" + pro2.CodigoProducto.ToString() +" | "+ pro2.ClienteId.ToString()+ " | " +pro2.FechaIngreso.ToString() + " | " + pro2.Descripcion.ToString() + " | " + 
                         pro2.ValorAprox.ToString()+ " | " +pro2.CodigoProducto.ToString() + " | " + pro2.Preferencias.ToString() + " | " + pro2.Disponible.ToString() +
-                                            "Confirmas:" + "\n\n1- Si \n" +
-                                            "2- No\n");
+                                            "\n\nConfirmas:" + "\n\n1 - Si \n" +
+                                            "2 - No\n");
                     opcTrueque = Console.ReadLine();
                     Console.Clear();
 
@@ -526,11 +527,71 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
                                 pro2.ValorAprox.ToString() + " | " + pro2.CodigoProducto.ToString() + " | " + pro2.Preferencias.ToString() + " | " + pro2.Disponible.ToString() + " |\n" +
                                 "------------------------------------------------------------------------------------");
                             GuardarHistorico();
-                            listaProducto.RemoveAll(x => historialTrueques.Contains(x);
-                            listaProducto.Remove(pro2);
+                            //int i = pro1.CodigoProducto;
+                            //int j = pro2.CodigoProducto;
+
+
+                               /* if (listaProducto[i].Disponible)
+                                {
+                                    listaProducto[i].Disponible = false;
+                                }
+                                else
+                                {
+                                    listaProducto[i].Disponible = true;
+                                }
+                                //insertarTxt();*/
+                            
+                            //listaProducto.RemoveAll(x => historialTrueques.Contains(x);
+                            //listaProducto.Remove(pro2);
+                            /*int i = pro1.CodigoProducto;
+                            int j = pro2.CodigoProducto;
+                            if (listaProducto[i].Disponible)
+                                listaProducto[i].Disponible = false;
+                            if (listaProducto[j].Disponible)
+                                listaProducto[j].Disponible = false;*/
+
+
+                            //Boolean dato;
+
+                            /*StreamReader reader = new StreamReader(rutaProducto);
+                            string content = reader.ReadToEnd();
+                            reader.Close();
+
+                            content = Regex.Replace(content, "true", "false");
+
+                            StreamWriter writer = new StreamWriter(rutaProducto);
+                            writer.Write(content);
+                            writer.Close();*/
+
+
+                            /*IEnumerable<Producto> disp = from Producto in listaProducto where Producto.Disponible.Equals(true) select Producto;
+                            //StreamWriter sw = new StreamWriter(rutaProducto, false);
+                            foreach (Producto disponibles in disp)
+                            {
+                                if (disponibles.CodigoProducto == i)
+                                {
+                                    string[] line = File.ReadAllLines(rutaProducto);
+                                    line[0] = "false";
+                                    foreach (string s in lines)
+                                        sw.WriteLine(s);
+                                }
+
+
+                                    //dato = disponibles.Disponible;
+                                    //listaProducto[i].Disponible = false;
+                                //disponibles.CodigoProducto = 2;
+                                //sw.WriteLine(disponibles.CodigoProducto.ToString() + "|" + disponibles.ClienteId.ToString() + "|" + disponibles.FechaIngreso.ToString() + "|" + disponibles.Descripcion.ToString() + "|" + disponibles.ValorAprox.ToString() + "|" + disponibles.Preferencias.ToString() + "|" + disponibles.Disponible.ToString() + "|");
+                                //disponibles.Disponible = false;
+                                //if (disponibles.CodigoProducto == j)
+                                    //disponibles.Disponible = false;
+                                  //  listaProducto[j].Disponible = false;
+                            }*/
+                            //sw.Dispose();
+                            //sw.Close();
+                            Console.ReadKey();
 
                             break;
-
+                                
                             case "2":
                                 Console.Clear();
                             break;
@@ -539,37 +600,9 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
 
                 }
 
-
-
-
-
-
                 Console.ReadKey();
 
-
-
-
-            /*
-                     public static Objeto BuscarObj(int ids) {
-            Objeto obj = new Objeto();
-            List<Objeto> idObjs = (from id in losObjetos
-                                   where id.Id == ids
-                                   select id).ToList();
-            foreach (Objeto id in idObjs) {
-                obj = id;
-            }
-            return obj;
-        }
-             */
-
-
-
-
             //Console.Clear();
-
-
-
-
 
             /*if (int.TryParse(cod, out int opc) || opc < estadoDisponible.Count() && opc != 0)
             {
@@ -613,6 +646,20 @@ namespace PruebaII_Trueque_Suarez_Fabian_Hernandez_Angel
             }
         }*/
         #endregion
+
+        /*static public void ReplaceInFile(string filePath, string searchText, string replaceText)
+        {
+            StreamReader reader = new StreamReader(filePath);
+            string content = reader.ReadToEnd();
+            reader.Close();
+
+            content = Regex.Replace(content, searchText, replaceText);
+
+            StreamWriter writer = new StreamWriter(filePath);
+            writer.Write(content);
+            writer.Close();
+
+        }*/
 
         #region BuscarPorFecha
         public static void BuscarProductoPorFecha()
